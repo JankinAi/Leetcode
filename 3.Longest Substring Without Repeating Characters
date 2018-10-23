@@ -1,38 +1,32 @@
-int compare(char *str)
+int lengthOfLongestSubstring(char* s)
 {
-    //char *temp;
-    int flag=0;
-    int n=strlen(str);
-    for (int i=0;i<n/2;i++)
-    {
-        if(str[i]!=str[n-i-1])
-        {
-            flag=1;
-        }
-    }
-    return flag;
-}
+	int len=0,num=0,flag=0;
+    char *end=s,*temp;
 
-char* longestPalindrome(char* s)
-{
-    int n=strlen(s),len=0;
-    char *result=(char*)malloc(sizeof(char)*1000);
-    for(int i=0;i<n-len;i++)
+	num=strlen(s);
+    for (int i=0;i<num;i++)
     {
-        char temp[1000]={'\0'};
-        for (int j=i,m=0;j<n;j++,m++)
+        char *addressTable[128]={NULL};
+        for(int j=i;j<num;j++)
         {
-            temp[m]=s[j];
-            if((j-i+1>len)&&(s[j]==s[i])&&(!compare(temp)))
+            if(addressTable[s[j]]!=NULL)
             {
-                //if(!compare(temp))
-                //{
-                    result=temp;
-                    len=j-i+1;
-                //}
+                len=len>j-i? len:j-i;
+                flag++;
+                break;
+            }
+            else
+            {
+                addressTable[s[j]]=(s+j);
+                len=len>j-i+1? len:j-i+1;
             }
 
         }
     }
-    return result;
+    if (flag==0)
+    {
+        len=num;
+    }
+
+	return len;
 }
