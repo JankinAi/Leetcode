@@ -1,0 +1,48 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ *  由于求和运算导致缺陷，求和值位数太多。
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
+{
+    long int sum=0,sumOne=0,sumTwo=0,i=0;
+    //struct *result=(struct ListNode *)malloc(sizeof(struct listNode));
+    struct ListNode *pOne=l1;
+    struct ListNode *pTwo=l2;
+    struct ListNode *pResult=(struct ListNode *)malloc(sizeof(struct ListNode));
+    struct ListNode *pTail=pResult;
+    //struct ListNode *pNew=(struct ListNode *)malloc(sizeof(struct ListNode));
+
+    while(pOne!=NULL)
+    {
+        sumOne=(pOne->val)*pow(10,i)+sumOne;
+        i++;
+        pOne=pOne->next;
+    }
+    i=0;
+
+    while(pTwo!=NULL)
+    {
+        sumTwo=(pTwo->val)*pow(10,i)+sumTwo;
+        i++;
+        pTwo=pTwo->next;
+    }
+    sum=sumOne+sumTwo;// sum maybe is too large for int ?
+    i=0;
+
+    while(sum!=0)
+    {
+        struct ListNode *pNew=(struct ListNode *)malloc(sizeof(struct ListNode));// need attention you need create a new space for new node!!
+        pNew->val=sum%10;
+        pTail->next=pNew;
+        pNew->next=NULL;
+        pTail=pNew;
+        sum=sum/10;
+        i++;
+    }
+
+    return pResult->next;
+}
