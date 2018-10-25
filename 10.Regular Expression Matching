@@ -1,0 +1,36 @@
+bool isMatch(char* s, char* p)
+{
+    if (p[0]=='\0')
+    {
+        return s[0]=='\0';
+    }
+    //int numS=strlen(s);
+    //int numP=strlen(p);
+
+    //first element match result (need to judge whether string s is empty)
+    bool first_match=(s[0]!='\0')&&(s[0]==p[0]||p[0]=='.');
+
+    /*if(first_match)
+    {
+        printf("%s\n","first match true");
+    }*/
+
+    //when p[1]='*',there are two cases;case 1:zero preceding elemnt,need to compare s and p.substr(2); case 2:at last one preceding element,need to compare s.substr(1) and p.
+    if(strlen(p)>=2&&p[1]=='*')
+    {
+        /*if(numP==2)
+        {
+            return first_match&&(isMatch(s+1,p));
+        }*/
+        return (first_match&&isMatch(s+1,p))||isMatch(s,p+2);
+    }
+    else
+    {
+        /*if(numP==1)
+        {
+            return first_match;
+        }*/
+        return first_match&&isMatch(s+1,p+1);
+    }
+
+}
