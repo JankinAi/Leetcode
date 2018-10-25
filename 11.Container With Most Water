@@ -1,0 +1,21 @@
+int minHeight(int heightI,int heightJ)
+{
+    return heightI>heightJ? heightJ:heightI;
+}
+int maxArea(int* height, int heightSize) {
+    int maxHeight=0,volume=0;
+    for (int i=0;i<heightSize-1;i++)
+    {
+        if(height[i]>maxHeight)
+        {
+            maxHeight=height[i];
+        }
+        else
+            continue;
+        for(int j=i+1;j<heightSize;j++)
+        {
+            volume=minHeight(height[i],height[j])*(j-i)>volume? minHeight(height[i],height[j])*(j-i):volume;
+        }
+    }
+    return volume;
+}
