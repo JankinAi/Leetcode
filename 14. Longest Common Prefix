@@ -1,0 +1,38 @@
+char* longestCommonPrefix(char** strs, int strsSize) {
+    char *ans=(char*)calloc(1000,sizeof(char));
+    //int hash_alph[127]={'\0'};
+    //int 1st_strNums=0;
+    int minSubscript=0,len=strlen(strs[0]);
+    for (int i=0;i<strsSize;i++)
+    {
+        if(len>strlen(strs[i]))
+        {
+            len=strlen(strs[i]);
+            minSubscript=i;
+        }
+    }
+    for(int i=0;i<strlen(strs[minSubscript]);i++)
+    {
+        int flag=0;
+        for(int j=0;j<strsSize;j++)
+        {
+            if(strs[j][i]!=strs[minSubscript][i])
+            {
+                flag++;
+                break;
+
+            }
+        }
+        if(flag==0)
+        {
+            ans[i]=strs[minSubscript][i];
+        }
+        else
+        {
+            break;
+        }
+
+    }
+    return ans;
+
+}
