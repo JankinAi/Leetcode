@@ -1,0 +1,12 @@
+char* intToRoman(int num) {
+    char *Roman[]={"","I","II","III","IV","V","VI","VII","VIII","IX",
+"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+"","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+"","M","MM","MMM","MMMM"};
+    char *ans=(char *)calloc(29,sizeof(char));
+    strcat(ans,Roman[num/1000+30]);
+    strcat(ans,Roman[(num/100)%10+20]);
+    strcat(ans,Roman[(num/10)%10+10]);
+    strcat(ans,Roman[num%10]);
+    return ans;
+}
