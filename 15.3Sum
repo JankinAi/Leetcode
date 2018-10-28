@@ -1,0 +1,71 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+
+int cmp(const void* a,const void *b)
+    {
+        return (*(int*)a-*(int*)b);
+    }
+int** threeSum(int* nums, int numsSize, int* returnSize) {
+    int count=0;
+    int **ans=NULL;
+    if(nums==NULL||numsSize<3)
+    {
+        return NULL;
+    }
+
+    qsort(nums,numsSize,sizeof(nums[0]),cmp);
+
+
+    for(int i=0;i<numsSize;i++)
+    {
+        int left=i+1;
+        int right=numsSize-1;
+        int sum;
+
+        if(i>0&&nums[i]==nums[i-1])
+        {continue;}
+
+        while(left<right)
+        {
+            sum=nums[i]+nums[left]+nums[right];
+
+            if(sum==0)
+            {
+                ans=(int**)realloc(ans,sizeof(int*)*(count+1));
+                ans[count]=(int*)malloc(sizeof(int)*3);
+                //int temp[3]={nums[i],nums[left],nums[right]};
+                ans[count][0]=nums[i];
+                ans[count][1]=nums[left];
+                ans[count][2]=nums[right];
+                count++;
+
+                while(nums[left]==nums[left+1])
+                {
+                    left++;
+                }
+
+                while(nums[right]==nums[right-1])
+                {
+                    right--;
+                }
+                
+                left++;
+                right--;
+            }
+            else if(sum>0)
+            {
+                right--;
+            }
+            else
+            {
+                left++;
+            }
+        }
+    }
+    *returnSize=count;
+    printf("%d",count);
+    return ans;
+}
