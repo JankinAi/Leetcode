@@ -1,0 +1,45 @@
+
+int cmp(const void* a,const void*b)
+{
+    return (*(int *)a-*(int *)b);
+}
+
+int threeSumClosest(int* nums, int numsSize, int target) {
+    int ans;
+    int abs_temp=abs(nums[0]+nums[numsSize-1]+nums[1]-target);
+    if(numsSize==3)
+    {
+        return nums[0]+nums[1]+nums[2];
+    }
+    qsort(nums,numsSize,sizeof(nums[0]),cmp);
+    for(int i=0;i<numsSize;i++)
+    {
+        int left=i+1;
+        int right=numsSize-1;
+        int sum;
+        //printf("%d\n",abs_temp);
+        while(left<right)
+        {
+            sum=nums[i]+nums[left]+nums[right];
+            if(sum==target)
+            {
+                return target;
+            }
+            if(abs(sum-target)<=abs_temp)
+            {
+                abs_temp=abs(sum-target);
+                ans=sum;
+                //printf("%d\n",ans);
+            }
+            if(left<right&&sum>target)
+            {
+                right--;
+            }
+            else if(left<right&&sum<target)
+            {
+                left++;
+            }
+        }
+    }
+    return ans;
+}
