@@ -1,0 +1,43 @@
+bool isValid(char* s) {
+    int nums=strlen(s);
+    int nums_par=0;
+    if(nums==0)   //when s is "" return true
+    {
+        return true;
+    }
+    if(nums%2!=0)
+    {
+        return false;
+    }
+    if(s[0]=='}'||s[0]==']'||s[0]==')') //avoid the index of arry is negative when the first element of s is')','}']'.
+    {
+        return false;
+    }
+    char arry[10000]={'\0'};  //one of case has a long length
+    for(int i=0;i<nums;i++)
+    {
+        if(s[i]=='('||s[i]=='['||s[i]=='{')//push stack
+        {
+            arry[nums_par]=s[i];
+            nums_par++;
+            continue;
+        }
+        if((s[i]=='}'||s[i]==']'||s[i]==')')&&(s[i]-arry[nums_par-1]==1||s[i]-arry[nums_par-1]==2))//pop stack 
+        {
+            arry[nums_par-1]=='\0';
+            nums_par--;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    if(nums_par==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
