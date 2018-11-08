@@ -1,0 +1,38 @@
+int divide(int dividend, int divisor) {
+
+
+    long long d1=labs(dividend);
+    long long d2=labs(divisor);
+    long long ans=0;
+    if(dividend==-2147483648)
+    {
+        d1=2147483648;
+    }
+    if(divisor==-2147483648)
+    {
+        d2=2147483648;
+    }
+    //printf("%ld\n",d1);
+    
+    while(d1-d2>=0)
+    {
+        long long temp=d2,count=1;
+        while(d1>=(temp<<1))
+        {
+            temp<<=1;
+            count<<=1;
+        }
+        d1-=temp;
+        ans+=count;
+        //ans++;
+        
+    }
+    if((dividend>0&&divisor>0)||(dividend<0&&divisor<0))
+    {
+        return ans>2147483647?2147483647:ans;
+    }
+    elseso 
+    {
+        return -ans;
+    }
+}
