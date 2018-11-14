@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<string.h>
+
+void swap(int *arry,int a,int b)
+{
+    int temp=arry[a];
+    arry[a]=arry[b];
+    arry[b]=temp;
+}
+void reverse(int *arry,int len)
+{
+    for(int i=0;i<len/2;i++)
+    {
+        int temp1=arry[len-1-i];
+        arry[len-1-i]=arry[i];
+        arry[i]=temp1;
+    }
+}
+void nextPermutation(int* nums, int numsSize) {
+    int i=numsSize-2,j=numsSize-1;
+    while(nums[i]>=nums[i+1]) i--;
+    //printf("%d\n",i);
+    if(i>=0)
+    {
+        while(nums[j]<=nums[i]) j--;
+        swap(nums,i,j);
+    }
+    int len_arry=numsSize-i-1;
+    reverse(nums+i+1,len_arry);
+
+    //printf("%d\n",len_arry);
+    //printf("%d%d%d",nums[0],nums[1],nums[2]);
+    /*for(int l=0;l<len_arry/2;l++)
+    {
+        int temp1=nums[numsSize-1-l];
+        nums[numsSize-1-l]=nums[i+l+1];
+        nums[i+l+1]=temp1;
+    }*/
+    return nums;
+}
+
+int main()
+{
+    int a[3]={1,3,2};
+    nextPermutation(a,3);
+    //printf("%d",a[1]);
+    printf("%d%d%d",a[0],a[1],a[2]);
+}
