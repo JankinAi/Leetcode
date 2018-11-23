@@ -1,0 +1,18 @@
+int numJewelsInStones(char* J, char* S) {
+    int len_J=strlen(J);
+    int len_S=strlen(S);
+    int map[59]={0};
+    int len=0;
+    for(int i=0;i<len_J;i++)
+    {
+        map[J[i]-'A']++;
+    }
+    for(int i=0;i<len_S;i++)
+    {
+        if(map[S[i]-'A']!=0)
+        {
+            len++;
+        }
+    }
+    return len;
+}
