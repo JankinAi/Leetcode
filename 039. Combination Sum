@@ -1,0 +1,25 @@
+void combine(int*** result, int* size, int* nums, int n, int target, int** column, int* before, int bef, int sum, int start) {
+    if(sum == target) {
+        (*size)++;
+        result[0] = (int**)realloc(result[0], *size * sizeof(int*));
+        result[0][*size - 1] = (int*)malloc(bef * sizeof(int));
+        column[0] = (int*)realloc(column[0], *size * sizeof(int));
+        column[0][*size - 1] = bef;
+        memcpy(result[0][*size - 1], before, sizeof(int) * bef);
+        return ;
+    }
+    int i = 0;
+    for(i = start; i < n; i++) {
+        if(sum + nums[i] > target)
+            continue;
+        before[bef] = nums[i];
+        combine(result, size, nums, n, target, column, before, bef + 1, sum + nums[i], i);
+    }
+}
+int** combinationSum(int* candidates, int candidatesSize, int target, int** columnSizes, int* returnSize) {
+    int** result = NULL;
+    int* before = (int*)malloc(100 * sizeof(int));
+    combine(&result, returnSize, candidates, candidatesSize, target, columnSizes, before, 0, 0, 0);
+    free(before);
+    return result;
+}
