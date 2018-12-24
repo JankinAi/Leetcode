@@ -1,20 +1,23 @@
+/*
+主要思想为将数组内数据分别带入，只要sum<=target即可，否则跳过。将使用的数据保存至before中，以便复制到result之中。
+*/
 void combine(int*** result, int* size, int* nums, int n, int target, int** column, int* before, int bef, int sum, int start) {
-    if(sum == target) {
+    if(sum == target) {                 //before为使用的数据，bef为before数组当前的长度，start可跳过许多重复数据
         (*size)++;
-        result[0] = (int**)realloc(result[0], *size * sizeof(int*));
-        result[0][*size - 1] = (int*)malloc(bef * sizeof(int));
+        result[0] = (int**)realloc(result[0], *size * sizeof(int*));  //重新分配内存
+        result[0][*size - 1] = (int*)malloc(bef * sizeof(int));       //增添一行
         column[0] = (int*)realloc(column[0], *size * sizeof(int));
         column[0][*size - 1] = bef;
-        memcpy(result[0][*size - 1], before, sizeof(int) * bef);
-        return ;
+        memcpy(result[0][*size - 1], before, sizeof(int) * bef);      //将获取到的符合条件的数组复制给输出结果
+        return ;                                                       // 退出当前函数
     }
     int i = 0;
     for(i = start; i < n; i++) {
         if(sum + nums[i] > target)
             continue;
         before[bef] = nums[i];
-        combine(result, size, nums, n, target, column, before, bef + 1, sum + nums[i], i);
-    }
+        combine(result, size, nums, n, target, column, before, bef + 1, sum + nums[i], i); //此处使用bef+1而不能使用bef++ 
+    }                      //模仿了栈的回弹操作
 }
 int** combinationSum(int* candidates, int candidatesSize, int target, int** columnSizes, int* returnSize) {
     int** result = NULL;
