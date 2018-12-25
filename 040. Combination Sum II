@@ -1,0 +1,35 @@
+void combination(int*** res,int* cand,int candSize,int target,int** colSize,int* retSize,int* before,int befSize,int sum)
+{
+    if(sum==target)
+    {
+        (*retSize)++;
+        res[0]=(int **)realloc(res[0],*retSize*sizeof(int*));
+        res[0][*retSize-1]=(int*)malloc(befSize*sizeof(int));
+        colSize[0]=(int *)realloc(colSize[0],*retSize*sizeof(int));
+        colSize[0][*retSize-1]=befSize;
+        memcpy(res[0][*retSize-1],before,befSize*sizeof(int));
+        return;
+    }
+
+    for(int i=0;i<candSize;i++)
+    {
+        if(sum+cand[i]>target) continue;
+        if(i>0&&cand[i]==cand[i-1]) continue;
+        before[befSize]=cand[i];
+        combination(res,&cand[i+1],candSize-i-1,target,colSize,retSize,before,befSize+1,sum+cand[i]);
+    }
+}
+
+int cmp(const void *a,const void *b)
+{
+    return *(int *)a-*(int *)b;
+}
+
+int** combinationSum2(int* candidates, int candidatesSize, int target, int** columnSizes, int* returnSize) {
+    int **res=NULL;
+    int *before=(int *)malloc(100*sizeof(int));
+    qsort(candidates,candidatesSize,sizeof(candidates[0]),cmp);
+    combination(&res,candidates,candidatesSize,target,columnSizes,returnSize,before,0,0);
+    free(before);
+    return res;
+}
