@@ -1,19 +1,19 @@
+void swap(int* a,int* b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
 int firstMissingPositive(int* nums, int numsSize) {
-    int map[10000];
-    memset(map,0,10000*sizeof(int));
-    for(int i=0;i<numsSize;i++)
-    { 
-        if(nums[i]>0)
-        {
-            map[nums[i]]++;
-        }
-    }
-    for(int j=1;j<10001;j++)
+    for(int i = 0; i < numsSize; ++ i)
     {
-        if(map[j]==0)
-        {
-            return j;
-        }
+         while(nums[i] > 0 && nums[i] <= numsSize && nums[nums[i] - 1] != nums[i])  swap(&nums[i], &nums[nums[i] - 1]);
     }
-    return -1;
+     
+    for(int i = 0; i < numsSize; ++ i)
+    {
+         if(nums[i] != i + 1)  return i + 1;
+    }    
+    return numsSize + 1;
 }
