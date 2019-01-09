@@ -1,0 +1,73 @@
+bool isIsomorphic(char* s, char* t) {
+    int nums_S=strlen(s);
+    int nums_T=strlen(t);
+    int map[128];
+    int ss[100000],pp[100000];
+    int count=0;
+    
+    //printf("%d\n",nums_S);
+    memset(map,0,sizeof(map));
+    memset(ss,0,sizeof(ss));
+    memset(pp,0,sizeof(pp));
+    
+    
+    // string turn to nums    for example : s="egg"  new ss is 122
+    for(int i=0 ;i<nums_S;i++)
+    {
+        if(i==0)
+        {
+            count++;
+            map[s[i]]=count;
+            ss[i]=count;
+            continue;
+        }
+        if(map[s[i]]!=0)
+        {
+            ss[i]=map[s[i]];
+            //printf("%d\n",1);
+            continue;
+        }
+        else
+        {
+            count++;
+            map[s[i]]=count;
+            ss[i]=count;
+            //printf("%d",1);
+        }
+    }
+    
+    
+    memset(map,0,sizeof(map));
+    count=0;
+    for(int i=0 ;i<nums_S;i++)
+    {
+        if(i==0)
+        {
+            count++;
+            map[t[i]]=count;
+            pp[i]=count;
+            continue;
+        }
+        if(map[t[i]]!=0)
+        {
+            pp[i]=map[t[i]];
+            //printf("%d\n",1);
+            continue;
+        }
+        else
+        {
+            count++;
+            map[t[i]]=count;
+            pp[i]=count;
+            //printf("%d",1);
+        }
+    }
+    for(int i=0;i<nums_S;i++)
+    {
+        if(ss[i]!=pp[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
